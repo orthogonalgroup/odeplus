@@ -7,7 +7,7 @@ Once a vulnerability is filed as a public issue, anyone can read it before a fix
 **Use one of these private channels instead:**
 
 1. **GitHub private vulnerability reporting** — open [*Report a vulnerability*](https://github.com/orthogonalgroup/ode-feedback/security/advisories/new) on this repository's Security tab. The report stays visible only to you and the ODE+ team.
-2. **Email** — <info@orthogonal.dev>, with `[Security]` in the subject line.
+2. **Email** — <orthogonalpub@outlook.com>, with `[Security]` in the subject line.
 
 ## What to include
 
