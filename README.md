@@ -2,7 +2,7 @@
 
 > **This is the official feedback channel for ODE+**, maintained directly by the ODE+ team. It is not a third-party or community-run mirror.
 
-Every report and suggestion filed here is read by the team, receives a decision, and that decision is visible to everyone.
+Reports filed here go straight to the ODE+ team. Every decision we reach is public — visible on the board, with a written reason for anything we decide against. Nothing gets closed silently. We have not published a response time yet, so the board reflects where things actually stand rather than a promised turnaround.
 
 ## Where to file what
 
