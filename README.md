@@ -12,7 +12,7 @@ Reports filed here go straight to the ODE+ team. Every decision we reach is publ
 | You want a feature added or improved | [File a feature request](https://github.com/orthogonalgroup/ode-feedback/issues/new?template=feature_request.yml) |
 | "How do I do X?", or an idea you want to talk through first | [Discussions](https://github.com/orthogonalgroup/ode-feedback/discussions) |
 | **A security vulnerability** | Do not open a public issue — see [SECURITY.md](https://github.com/orthogonalgroup/ode-feedback/blob/main/SECURITY.md) |
-| Anything about your account or project data that should not be public | Email <orthogonalpub@outlook.com> |
+| Anything about your account or project data that should not be public | Email <info@orthogonal.dev> |
 
 **Search before you file.** [Browse existing issues](https://github.com/orthogonalgroup/ode-feedback/issues?q=is%3Aissue) first. If your problem is already reported, adding a 👍 and your own details to that issue helps more than opening a new one — we use report frequency to set priority.
 
