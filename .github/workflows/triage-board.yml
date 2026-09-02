@@ -1,0 +1,137 @@
+# Puts every issue on the public board and keeps its Status in step with its lifecycle.
+#
+# Why an Action instead of the built-in Projects automations:
+#   1. Built-in automations can only be configured in the web UI, so the
+#      configuration never lands in version control and changes go unnoticed.
+#   2. The built-in "item closed" trigger cannot tell "released" from
+#      "decided against", and those are two different columns on our board.
+#
+# Requires one secret: PROJECT_PAT
+#   A fine-grained PAT whose only permission is
+#   Organization permissions -> Projects: Read and write. Grant no repository
+#   permissions at all. GITHUB_TOKEN cannot operate on Projects v2 — that is a
+#   known GitHub limitation, not an oversight here.
+#   When the secret is absent this workflow skips quietly instead of failing.
+
+name: Triage board
+
+on:
+  issues:
+    types: [opened, reopened, closed]
+
+permissions:
+  issues: write
+
+jobs:
+  sync-board:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check whether PROJECT_PAT is configured
+        id: guard
+        env:
+          PAT: ${{ secrets.PROJECT_PAT }}
+        run: |
+          if [ -z "$PAT" ]; then
+            echo "::warning::secret PROJECT_PAT is not set — skipping board sync. See the comment at the top of this workflow file."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Add to board and set Status
+        if: steps.guard.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+          ORG: orthogonalgroup
+          PROJECT_NUMBER: "8"
+          ISSUE_NODE_ID: ${{ github.event.issue.node_id }}
+          ACTION: ${{ github.event.action }}
+          STATE_REASON: ${{ github.event.issue.state_reason }}
+        run: |
+          set -euo pipefail
+
+          # Newly filed or reopened -> New. On close, route by close reason.
+          case "$ACTION" in
+            opened|reopened) TARGET="New" ;;
+            closed)
+              case "$STATE_REASON" in
+                completed)   TARGET="Shipped" ;;
+                not_planned) TARGET="Won't Do" ;;
+                duplicate)   TARGET="Won't Do" ;;
+                *)           TARGET="Won't Do" ;;
+              esac
+              ;;
+            *) echo "Unhandled action: $ACTION"; exit 0 ;;
+          esac
+          echo "Target status: $TARGET"
+
+          # Resolve project / field / option ids at run time rather than
+          # hardcoding them, so renaming or reordering columns in the UI
+          # surfaces as a loud failure instead of silently doing nothing.
+          META=$(gh api graphql -f query='
+            query($org:String!,$num:Int!){
+              organization(login:$org){
+                projectV2(number:$num){
+                  id
+                  field(name:"Status"){
+                    ... on ProjectV2SingleSelectField{ id options{ id name } }
+                  }
+                }
+              }
+            }' -F org="$ORG" -F num="$PROJECT_NUMBER")
+
+          PROJECT_ID=$(echo "$META" | jq -r '.data.organization.projectV2.id')
+          FIELD_ID=$(echo "$META" | jq -r '.data.organization.projectV2.field.id')
+          OPTION_ID=$(echo "$META" | jq -r --arg t "$TARGET" \
+            '.data.organization.projectV2.field.options[] | select(.name==$t) | .id')
+
+          if [ -z "$OPTION_ID" ] || [ "$OPTION_ID" = "null" ]; then
+            echo "::error::No Status option named '$TARGET' on the board — check whether the five columns were changed"
+            exit 1
+          fi
+
+          # addProjectV2ItemById is idempotent: it returns the existing item
+          # when the issue is already on the board.
+          ITEM_ID=$(gh api graphql -f query='
+            mutation($p:ID!,$c:ID!){
+              addProjectV2ItemById(input:{projectId:$p, contentId:$c}){ item{ id } }
+            }' -f p="$PROJECT_ID" -f c="$ISSUE_NODE_ID" \
+            --jq '.data.addProjectV2ItemById.item.id')
+
+          gh api graphql -f query='
+            mutation($p:ID!,$i:ID!,$f:ID!,$o:String!){
+              updateProjectV2ItemFieldValue(input:{
+                projectId:$p, itemId:$i, fieldId:$f,
+                value:{singleSelectOptionId:$o}
+              }){ projectV2Item{ id } }
+            }' -f p="$PROJECT_ID" -f i="$ITEM_ID" -f f="$FIELD_ID" -f o="$OPTION_ID" \
+            --jq '.data.updateProjectV2ItemFieldValue.projectV2Item.id' > /dev/null
+
+          echo "Status set to $TARGET"
+
+  # Soft guard behind "Won't Do must carry a stated reason".
+  # GitHub has no native rule requiring a comment before closing, so this
+  # labels the gap instead. The label is deliberately the only signal — this is
+  # an internal reminder to the team and must not become a public comment on
+  # the reporter's issue.
+  require-close-reason:
+    if: github.event.action == 'closed' && github.event.issue.state_reason == 'not_planned'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Flag closes that carry no explanation
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          set -euo pipefail
+          COUNT=$(gh api "repos/$REPO/issues/$NUM/comments" --paginate \
+            --jq '[.[] | select(.author_association=="OWNER" or .author_association=="MEMBER" or .author_association=="COLLABORATOR")] | length')
+          echo "Team comments on this issue: $COUNT"
+          if [ "$COUNT" -gt 0 ]; then
+            gh issue edit "$NUM" --repo "$REPO" --remove-label needs-close-reason 2>/dev/null || true
+            echo "Closed with an explanation — nothing to flag."
+            exit 0
+          fi
+          gh issue edit "$NUM" --repo "$REPO" --add-label needs-close-reason
+          echo "::warning::Issue #$NUM was closed as not planned with no explanation — labelled needs-close-reason"

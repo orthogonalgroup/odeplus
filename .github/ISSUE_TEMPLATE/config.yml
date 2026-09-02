@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/orthogonalgroup/ode-feedback/blob/main/SECURITY.md
+    about: Never file security issues publicly — use the private disclosure channel
+  - name: 💬 Questions and discussion
+    url: https://github.com/orthogonalgroup/ode-feedback/discussions
+    about: "\"How do I do X?\" and half-formed ideas get a faster answer in Discussions"
+  - name: 🚀 Send feedback from inside ODE+
+    url: https://paas.orthogonal.cc
+    about: The easiest path while you are working — it attaches your current context automatically
+  - name: 📧 Private matters (account or data)
+    url: mailto:orthogonalpub@outlook.com
+    about: Anything that should not be public — email us instead

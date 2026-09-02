@@ -1,0 +1,109 @@
+name: Bug report
+description: Something is broken — an error, a wrong result, or a feature that does not work
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+assignees: ["Orthogonalpub"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Search before you file
+
+        Please [search existing issues](../?q=is%3Aissue) first. If your problem is already reported, adding a 👍 and your own details to that issue helps more than opening a new one — we use report frequency to set priority.
+
+        > ⚠️ **Do not file security vulnerabilities here.** This is a public repository, readable by anyone. Use the private channel described in [SECURITY.md](../../blob/main/SECURITY.md).
+        >
+        > ⚠️ **Do not post sensitive information** — passwords, tokens, proprietary model files, customer data. Redact screenshots before attaching them.
+
+  - type: checkboxes
+    id: presubmit
+    attributes:
+      label: Before filing
+      options:
+        - label: I searched the existing issues and did not find this problem
+          required: true
+        - label: I confirm this is not a security vulnerability (those go through the private channel in SECURITY.md)
+          required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What went wrong
+      description: One or two sentences on what happened
+      placeholder: e.g. After clicking "Run simulation" the progress bar stays at 0% and nothing changes for 10 minutes
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The exact sequence that lets us observe the problem ourselves. **This field does more than any other to determine how fast the bug gets fixed.**
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. Enter ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected to happen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Paste error messages verbatim. You can drag screenshots or screen recordings directly into this field.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does it happen
+      options:
+        - Every time
+        - Most of the time
+        - Occasionally
+        - Happened once
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact on your work
+      options:
+        - Blocked completely, no workaround
+        - Significant, but I have a workaround
+        - Minor annoyance, I can live with it
+        - Just reporting it
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Please fill in as much as you can — environment differences are frequently the direct cause
+      value: |
+        - Browser and version:
+        - Operating system:
+        - When it happened (include time zone):
+        - URL of the affected page:
+        - Related model or project name (if applicable):
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Browser console errors, your own theory, or anything else you think is relevant
+    validations:
+      required: false
