@@ -6,7 +6,7 @@ Once a vulnerability is filed as a public issue, anyone can read it before a fix
 
 **Use one of these private channels instead:**
 
-1. **GitHub private vulnerability reporting** — open [*Report a vulnerability*](../../security/advisories/new) on this repository's Security tab. The report stays visible only to you and the ODE+ team.
+1. **GitHub private vulnerability reporting** — open [*Report a vulnerability*](https://github.com/orthogonalgroup/ode-feedback/security/advisories/new) on this repository's Security tab. The report stays visible only to you and the ODE+ team.
 2. **Email** — <orthogonalpub@outlook.com>, with `[Security]` in the subject line.
 
 ## What to include
@@ -27,4 +27,4 @@ Please hold off on publicly disclosing the details until a fix has shipped.
 
 ## What is not a security issue
 
-Errors, incorrect results, and pages failing to load do not by themselves expose data or bypass permissions. File those as a regular [bug report](../../issues/new?template=bug_report.yml) — the public process will get you visible progress faster.
+Errors, incorrect results, and pages failing to load do not by themselves expose data or bypass permissions. File those as a regular [bug report](https://github.com/orthogonalgroup/ode-feedback/issues/new?template=bug_report.yml) — the public process will get you visible progress faster.

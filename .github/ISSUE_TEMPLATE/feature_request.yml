@@ -9,9 +9,9 @@ body:
       value: |
         ### Search before you file
 
-        Please [search existing issues](../?q=is%3Aissue) first. If someone has already asked for this, add a 👍 and describe your own use case on that issue — how many people have asked for the same thing feeds directly into how it gets prioritised.
+        Please [search existing issues](https://github.com/orthogonalgroup/ode-feedback/issues?q=is%3Aissue) first. If someone has already asked for this, add a 👍 and describe your own use case on that issue — how many people have asked for the same thing feeds directly into how it gets prioritised.
 
-        Ideas you have not fully worked out are welcome in [Discussions](../../discussions) instead.
+        Ideas you have not fully worked out are welcome in [Discussions](https://github.com/orthogonalgroup/ode-feedback/discussions) instead.
 
   - type: checkboxes
     id: presubmit

@@ -8,22 +8,19 @@ Every report and suggestion filed here is read by the team, receives a decision,
 
 | What you have | Where it goes |
 | --- | --- |
-| Something is broken — an error, a wrong result, a feature that does not work | [File a bug report](../../issues/new?template=bug_report.yml) |
-| You want a feature added or improved | [File a feature request](../../issues/new?template=feature_request.yml) |
-| "How do I do X?", or an idea you want to talk through first | [Discussions](../../discussions) |
-| **A security vulnerability** | Do not open a public issue — see [SECURITY.md](SECURITY.md) |
+| Something is broken — an error, a wrong result, a feature that does not work | [File a bug report](https://github.com/orthogonalgroup/ode-feedback/issues/new?template=bug_report.yml) |
+| You want a feature added or improved | [File a feature request](https://github.com/orthogonalgroup/ode-feedback/issues/new?template=feature_request.yml) |
+| "How do I do X?", or an idea you want to talk through first | [Discussions](https://github.com/orthogonalgroup/ode-feedback/discussions) |
+| **A security vulnerability** | Do not open a public issue — see [SECURITY.md](https://github.com/orthogonalgroup/ode-feedback/blob/main/SECURITY.md) |
 | Anything about your account or project data that should not be public | Email <orthogonalpub@outlook.com> |
 
-**Search before you file.** [Browse existing issues](../../issues?q=is%3Aissue) first. If your problem is already reported, adding a 👍 and your own details to that issue helps more than opening a new one — we use report frequency to set priority.
+**Search before you file.** [Browse existing issues](https://github.com/orthogonalgroup/ode-feedback/issues?q=is%3Aissue) first. If your problem is already reported, adding a 👍 and your own details to that issue helps more than opening a new one — we use report frequency to set priority.
 
 ## How this relates to in-app feedback
 
-ODE+ also has a feedback entry inside the product. The two are **complementary, not competing pipelines** — whichever you use, your report enters the same triage process, so there is no wrong choice.
+A feedback entry inside ODE+ itself is being built. Once it ships, the two will be **complementary, not competing pipelines** — either way your report enters the same triage process, so there will be no wrong choice. The in-app entry will be the quickest path while you are working, because it can attach your current context automatically.
 
-They differ only in what they are good for:
-
-- **In-app feedback** is the easiest path while you are working. It attaches your current context automatically.
-- **This repository** is the fallback when a page is stuck or will not load and the in-app entry itself is unavailable. It is also the only place where you can watch a report progress, or check whether someone else has already hit the same thing.
+This repository stays useful either way. It is the channel that still works when a page is stuck, will not load, or the in-app entry itself is unavailable — and it is the only place where you can watch a report progress, or check whether someone else has already hit the same thing.
 
 ## Tracking status
 
