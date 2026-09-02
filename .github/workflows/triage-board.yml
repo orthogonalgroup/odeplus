@@ -125,10 +125,25 @@ jobs:
           NUM: ${{ github.event.issue.number }}
         run: |
           set -euo pipefail
-          COUNT=$(gh api "repos/$REPO/issues/$NUM/comments" --paginate \
-            --jq '[.[] | select(.author_association=="OWNER" or .author_association=="MEMBER" or .author_association=="COLLABORATOR")] | length')
-          echo "Team comments on this issue: $COUNT"
-          if [ "$COUNT" -gt 0 ]; then
+
+          # Deliberately NOT using the comments' author_association field.
+          # For a member whose organization membership is private, that field
+          # renders as NONE to any token that cannot see the membership —
+          # GITHUB_TOKEN included — so a properly explained close would be
+          # flagged anyway. /repos/:repo/assignees/:login answers 204 only for
+          # users with push access, needs no extra token permission, and does
+          # not depend on membership visibility.
+          TEAM=0
+          for LOGIN in $(gh api "repos/$REPO/issues/$NUM/comments" --paginate --jq '.[].user.login' | sort -u); do
+            case "$LOGIN" in *"[bot]") continue ;; esac
+            if gh api "repos/$REPO/assignees/$LOGIN" --silent 2>/dev/null; then
+              echo "  $LOGIN has push access — counts as a team explanation"
+              TEAM=$((TEAM + 1))
+            fi
+          done
+          echo "Team comments on this issue: $TEAM"
+
+          if [ "$TEAM" -gt 0 ]; then
             gh issue edit "$NUM" --repo "$REPO" --remove-label needs-close-reason 2>/dev/null || true
             echo "Closed with an explanation — nothing to flag."
             exit 0
