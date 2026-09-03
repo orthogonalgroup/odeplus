@@ -1,10 +1,10 @@
 blank_issues_enabled: false
 contact_links:
   - name: 🔒 Report a security vulnerability
-    url: https://github.com/orthogonalgroup/ode-feedback/blob/main/SECURITY.md
+    url: https://github.com/orthogonalgroup/odeplus/blob/main/SECURITY.md
     about: Never file security issues publicly — use the private disclosure channel
   - name: 💬 Questions and discussion
-    url: https://github.com/orthogonalgroup/ode-feedback/discussions
+    url: https://github.com/orthogonalgroup/odeplus/discussions
     about: "\"How do I do X?\" and half-formed ideas get a faster answer in Discussions"
   - name: 📧 Private matters (account or data)
     url: mailto:info@orthogonal.dev
