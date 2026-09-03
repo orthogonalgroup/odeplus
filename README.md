@@ -1,6 +1,8 @@
 # ODE+ Feedback
 
-> **This is the official feedback channel for ODE+**, maintained directly by the ODE+ team. It is not a third-party or community-run mirror.
+> **This is the official feedback channel for ODE+**, maintained directly by the ODE+ team — not a third-party or community-run mirror.
+>
+> **Despite the name, this is not the product's source code.** There is none here, and the repository does not accept code contributions. It exists to collect and track feedback.
 
 Reports filed here go straight to the ODE+ team. Every decision we reach is public — visible on the board, with a written reason for anything we decide against. Nothing gets closed silently. We have not published a response time yet, so the board reflects where things actually stand rather than a promised turnaround.
 
@@ -36,7 +38,6 @@ Every issue we take on appears on a public board with one of five states:
 
 Duplicates are labelled `duplicate` and linked to the original rather than closed without a trace, so you can always follow the link to where the work actually stands.
 
-## Two things to know
+## Do not post sensitive information
 
-- **This repository does not accept code contributions.** There is no source code here; it exists to collect and track feedback.
-- **Do not post sensitive information** — passwords, tokens, proprietary model files, customer data. This is a public repository, visible to anyone, including search engines. Redact screenshots before attaching them.
+Passwords, tokens, proprietary model files, customer data — none of that belongs in a public issue. This repository is visible to anyone, search engines included. Redact screenshots before you attach them.
